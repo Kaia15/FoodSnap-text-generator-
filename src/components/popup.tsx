@@ -6,7 +6,7 @@ import { useImageUrl } from '../hooks/useImageUrl';
 
 const Popup = () => {
     const { dish, setDish, submit } = useDish();
-    const { description, setDescription, generateDescription } = useDescription();
+    const { description, setDescription, generateDescription, startGenerate } = useDescription();
     const {imageUrl, setImageUrl} = useImageUrl();
 
     const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +28,7 @@ const Popup = () => {
                 <input type="date" id="date" onChange={handleDateChange} />
                 <PhotoUpload />
                 <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Generate dish description by our AI assistant </button>
+                {startGenerate && <p>{description ? description.message.content : "Loading..."}</p>}
                 <button type='submit'>Post</button>
             </form>
         </div>

@@ -1,7 +1,8 @@
 // import OpenAI from "openai";
 // const axios = require("axios");
 import axios from "axios";
-import { readFromLS } from "./store";
+import { readFromLS, writeToLS } from "./store";
+import { dishT } from "./types";
 
 const apiKey = "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";
 
@@ -46,9 +47,15 @@ export const getDishDescription = async function (imageUrl: string) {
     }
 }
 
-export const fetchAllDishes = function () {
-    const data = readFromLS();
+export const fetchAllDishes = async function () {
+    const data = await readFromLS();
     return data;
+}
+
+export const addNewDish = async function(payload: dishT) {
+    const rdata = await readFromLS();
+    rdata.push(payload);
+    await writeToLS(rdata);
 }
 
 // main();

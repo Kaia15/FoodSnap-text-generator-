@@ -7,10 +7,12 @@ interface AuthContextType {
     setDish: React.Dispatch<React.SetStateAction<dishT>>;
     imageUrl: string | null;
     setImageUrl: React.Dispatch<React.SetStateAction<string | null>>;
-    collection: dishT[] | null[];
-    setCollection: React.Dispatch<React.SetStateAction<dishT[] | null[]>>;
+    collection: (dishT | null)[];
+    setCollection: React.Dispatch<React.SetStateAction<(dishT | null)[]>>;
     description: descriptionT | null;
     setDescription: React.Dispatch<React.SetStateAction<descriptionT | null>>;
+    startGenerate: boolean,
+    setStartGenerate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -21,17 +23,20 @@ const AuthContext = createContext<AuthContextType>({
     collection: [],
     setCollection: () => {},
     description: null,
-    setDescription: () => {}
+    setDescription: () => {},
+    startGenerate: false,
+    setStartGenerate: () => {}
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [dish, setDish] = useState<dishT>({ name: "", description: "", date: new Date(), imageUrl: "" });
     const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const [collection, setCollection] = useState<dishT[] | null[]>([]);
+    const [collection, setCollection] = useState<(dishT | null)[]>([]);
     const [description, setDescription] = useState<descriptionT | null>(null);
+    const [startGenerate, setStartGenerate] = useState<boolean>(false);
 
     return (
-        <AuthContext.Provider value={{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription }}>
+        <AuthContext.Provider value={{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription, startGenerate, setStartGenerate }}>
             {children}
         </AuthContext.Provider>
     );
