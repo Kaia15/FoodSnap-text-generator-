@@ -15,7 +15,7 @@ export const getDishDescription = async function (imageUrl: string) {
                 content: [
                     {
                         type: "text",
-                        text: "What’s in this image?",
+                        text: "What are the average amounts of protein, carbohydrates, vegetables, and fat, and total calories present in the dish?",
                     },
                     {
                         type: "image_url",
