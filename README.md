@@ -6,6 +6,8 @@ Demo:
 
 https://github.com/Kaia15/openai-food-app/assets/86872685/e13f8742-311e-41ac-b6ca-2d9c882d9e56
 
+Since the app is still in the development process, some features are not available on mobile devices.
+
 ## Setup
 
 1. Login your GitHub account in your VSCode | command prompt.
