@@ -1,19 +1,21 @@
-    // Popup.jsx
-    import React from 'react';
-    import { PhotoUpload } from './photo';
-    import { useDish } from '../hooks/useDish';
-    import { useDescription } from '../hooks/useDescription';
-    import { useImageUrl } from '../hooks/useImageUrl';
+// Popup.jsx
+import React, { useContext } from 'react';
+import { PhotoUpload } from './photo';
+import { useDish } from '../hooks/useDish';
+import { useDescription } from '../hooks/useDescription';
+import { useImageUrl } from '../hooks/useImageUrl';
+import { AuthContext } from '../context/context';
 
-    const Popup = () => {
-        const { dish, setDish, submit, handleDateChange, handleNameChange } = useDish();
-        const { description, setDescription, generateDescription, startGenerate } = useDescription();
-        const { imageUrl, setImageUrl, popNext, setPopNext } = useImageUrl();
+const Popup = () => {
+    const { dish, setDish, submit, handleDateChange, handleNameChange } = useDish();
+    const { description, setDescription, generateDescription, startGenerate } = useDescription();
+    const { imageUrl, setImageUrl, popNext, setPopNext } = useImageUrl();
+    const { openPopup, setOpenPopup } = useContext(AuthContext);
 
-        return (
-            <div className='popup'>
+    return (
+        <div className='popup'>
             <style>
-            {`
+                {`
             .popup {
                 font-family: Arial, sans-serif;
                 margin: 0;
@@ -123,31 +125,31 @@
                 font-size: 16px;
             }
             `}
-    </style>
-                <span className="close-btn">&times;</span>
-                <div id="post-modal" className="modal">
-                    
-                        <div className="modal-body">
-                            <PhotoUpload />
-                            {popNext && <button onClick={() => setPopNext(false)} type='button'> Back </button>}
-                            {popNext && (
-                                <div className="description-container">
-                                    <form onSubmit={submit}>
-                                        <label htmlFor="name"> Name </label>
-                                        <input type="text" id="name" onChange={handleNameChange} />
-                                        <label htmlFor="date"> Date </label>
-                                        <input type="date" id="date" onChange={handleDateChange} />
-                                        <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Generate dish description by our AI assistant </button>
-                                        {startGenerate && <p className='modal-form'>{description ? description.message.content : "Loading..."}</p>}
-                                        <button type='submit'>Post</button>
-                                    </form>
-                                </div>
-                            )}
-                        </div>
-                    
-                </div>
-            </div>
-        );
-    };
+            </style>
+            <span className="close-btn" onClick={() => setOpenPopup(false)}>&times;</span>
+            <div id="post-modal" className="modal">
 
-    export default Popup;
+                <div className="modal-body">
+                    <PhotoUpload />
+                    {popNext && <button onClick={() => setPopNext(false)} type='button'> Back </button>}
+                    {popNext && (
+                        <div className="description-container">
+                            <form onSubmit={submit}>
+                                <label htmlFor="name"> Name </label>
+                                <input type="text" id="name" onChange={handleNameChange} />
+                                <label htmlFor="date"> Date </label>
+                                <input type="date" id="date" onChange={handleDateChange} />
+                                <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Generate dish description by our AI assistant </button>
+                                {startGenerate && <p className='modal-form'>{description ? description.message.content : "Loading..."}</p>}
+                                <button type='submit'>Post</button>
+                            </form>
+                        </div>
+                    )}
+                </div>
+
+            </div>
+        </div>
+    );
+};
+
+export default Popup;

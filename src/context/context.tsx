@@ -17,6 +17,8 @@ interface AuthContextType {
     setImageSrc: React.Dispatch<React.SetStateAction<string | null>>;
     popNext: boolean,
     setPopNext: React.Dispatch<React.SetStateAction<boolean>>;
+    openPopup: boolean,
+    setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -33,7 +35,9 @@ const AuthContext = createContext<AuthContextType>({
     imageSrc: null,
     setImageSrc: () => {},
     popNext: false,
-    setPopNext: () => {}
+    setPopNext: () => {},
+    openPopup: false,
+    setOpenPopup: () => {}
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -44,9 +48,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [startGenerate, setStartGenerate] = useState<boolean>(false);
     const [imageSrc, setImageSrc] = React.useState<string | null>(null);
     const [popNext, setPopNext] = useState<boolean>(false);
+    const [openPopup, setOpenPopup] = useState<boolean>(false);
 
     return (
-        <AuthContext.Provider value={{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription, startGenerate, setStartGenerate, imageSrc, setImageSrc, popNext, setPopNext }}>
+        <AuthContext.Provider value={{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription, startGenerate, setStartGenerate, imageSrc, setImageSrc, popNext, setPopNext, openPopup, setOpenPopup }}>
             {children}
         </AuthContext.Provider>
     );
