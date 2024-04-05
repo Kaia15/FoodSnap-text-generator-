@@ -6,7 +6,6 @@ import { AuthContext } from "../context/context";
 export function useCollectionFetch() {
   // const [collection, setCollection] = useState<dishT[] | null[]>([]);
   const {collection,setCollection} = useContext(AuthContext);
-  const imageUrl = ""
 
   useEffect(() => {
 

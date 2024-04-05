@@ -6,17 +6,25 @@ import { AuthContext } from '../context/context';
 export function useImageUrl() {
     // const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
-    const {imageUrl,setImageUrl} = useContext(AuthContext);
+    const {imageUrl,setImageUrl, imageSrc, setImageSrc, popNext, setPopNext} = useContext(AuthContext);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             const selectedFile = event.target.files[0];
             setFile(selectedFile);
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                  setImageSrc(reader.result);
+                }
+            };
+            reader.readAsDataURL(selectedFile);
         }
     };
 
     const handleUpload = async (file: File | null) => {
         console.log("Uploading...")
+        setPopNext(true);
         if (file) {
             // event.preventDefault(); 
             try {
@@ -35,11 +43,12 @@ export function useImageUrl() {
         }
     };
     console.log(imageUrl);
+    // console.log(imageSrc);
 
     // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     //     event.preventDefault();
     //     await handleUpload(file);
     // };
 
-    return { file, imageUrl, setImageUrl, handleFileChange, handleUpload }
+    return { file, imageUrl, setImageUrl, handleFileChange, handleUpload, imageSrc, popNext, setPopNext }
 }

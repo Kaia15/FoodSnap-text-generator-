@@ -16,7 +16,7 @@ function App() {
       ))} */}
       {/* <button onClick={() => generateDescription(imageUrl)}> Generate Description </button>
       {description ? <div> {description.message.content} </div> : <div></div>} */}
-      <Popup />
+      {/* <Popup /> */}
     </div>
   );
 }

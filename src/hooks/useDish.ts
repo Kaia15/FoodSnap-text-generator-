@@ -4,6 +4,7 @@ import { useImageUrl } from "./useImageUrl";
 import { AuthContext } from "../context/context";
 import { useCollectionFetch } from "./useCollectionFetch";
 import { addNewDish } from "../utils/requests";
+import { ChangeEvent } from "react";
 
 export const useDish = function() {
     // const [dish, setDish] = useState<dishT>({name: "", description: "", date: new Date(), imageUrl: ""});
@@ -22,6 +23,16 @@ export const useDish = function() {
         console.log(imageUrl);
     }, [imageUrl, description]);
 
+    const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setDish((prevDish) => ({ ...prevDish, name: value }));
+    };
+
+    const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setDish((prevDish) => ({ ...prevDish, date: new Date(value) }));
+    };
+
     const submit = async function () {
         setCollection(prevdata => [...prevdata,dish]);
         addNewDish(dish);
@@ -32,5 +43,5 @@ export const useDish = function() {
     // console.log(dish);
     console.log(collection);
     
-    return {dish,setDish,submit}
+    return {dish,setDish,submit,handleNameChange,handleDateChange}
 }
