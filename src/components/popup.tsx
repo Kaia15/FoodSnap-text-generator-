@@ -35,9 +35,8 @@ const Popup = () => {
             .modal {
                 background-color: white;
                 border-radius: 8px;
-                padding: 20px;
-                max-width: 90%;
-                max-height: 90vh;
+                max-width: 50%;
+                max-height: 75%;
                 overflow: auto;
                 display: flex;
                 flex-direction: column;
@@ -56,10 +55,11 @@ const Popup = () => {
             .modal-body {
                 text-align: center;
                 width: 100%;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 10px;
             }
 
             .post-image {
@@ -91,6 +91,7 @@ const Popup = () => {
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
+                padding: 10px;
             }
 
             label {
@@ -124,13 +125,19 @@ const Popup = () => {
                 cursor: pointer;
                 font-size: 16px;
             }
+
+            .description {
+                overflow: scroll;
+                max-height: 100px;
+                max-width: 
+            }
             `}
             </style>
             <span className="close-btn" onClick={() => setOpenPopup(false)}>&times;</span>
-            <div id="post-modal" className="modal">
-
-                <div className="modal-body">
+            <div className="modal">
+                <div className="modal-body" style={{flexDirection: popNext ? "row": "column"}}>
                     <PhotoUpload />
+                    <div style={{flex: '1'}}>
                     {popNext && <button onClick={() => setPopNext(false)} type='button'> Back </button>}
                     {popNext && (
                         <div className="description-container">
@@ -140,11 +147,12 @@ const Popup = () => {
                                 <label htmlFor="date"> Date </label>
                                 <input type="date" id="date" onChange={handleDateChange} />
                                 <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Generate dish description by our AI assistant </button>
-                                {startGenerate && <p className='modal-form'>{description ? description.message.content : "Loading..."}</p>}
+                                {startGenerate && <p className='description'>{description ? description.message.content : "Loading..."}</p>}
                                 <button type='submit'>Post</button>
                             </form>
                         </div>
                     )}
+                    </div>
                 </div>
 
             </div>

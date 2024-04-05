@@ -4,7 +4,7 @@ import axios from "axios";
 import { readFromLS, writeToLS } from "./store";
 import { dishT } from "./types";
 
-const apiKey = "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";
+const apiKey = "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";
 
 export const getDishDescription = async function (imageUrl: string) {
     let payload = {

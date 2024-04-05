@@ -15,6 +15,7 @@ export function PhotoUpload() {
                 justify-content: center;
                 margin-top: 10px;
                 width: 100%;
+                flex: 1;
             }
             
             .post-image {
@@ -22,6 +23,7 @@ export function PhotoUpload() {
                 max-width: 500px;
                 height: 400px;
                 border-radius: 8px;
+                margin: 20px 0px;
             }
             `}
             
