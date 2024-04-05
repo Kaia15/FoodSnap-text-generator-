@@ -52,6 +52,16 @@ export const fetchAllDishes = async function () {
     return data;
 }
 
+export const fetchLastWeekDishes = async function() {
+    const data = await fetchAllDishes();
+    const now = new Date();
+    const p = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    return data?.filter((post:dishT) => {
+        const d = post?.date;
+        if (d) return new Date(d) >= p;
+    });
+}
+
 export const addNewDish = async function(payload: dishT) {
     const rdata = await readFromLS();
     rdata.push(payload);

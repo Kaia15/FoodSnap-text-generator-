@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { fetchAllDishes, getDishDescription } from "../utils/requests";
+import { fetchAllDishes, fetchLastWeekDishes, getDishDescription } from "../utils/requests";
 import { dishT } from "../utils/types";
 import { AuthContext } from "../context/context";
 
@@ -11,7 +11,7 @@ export function useCollectionFetch() {
 
     const tdata = async function () {
       try {
-        const data = await fetchAllDishes();
+        const data = await fetchLastWeekDishes();
         setCollection(data);
       } catch (err) {
         console.log(err);
