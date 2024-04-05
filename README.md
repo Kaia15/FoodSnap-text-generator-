@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Demo: 
+
+https://github.com/Kaia15/openai-food-app/assets/86872685/e13f8742-311e-41ac-b6ca-2d9c882d9e56
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
