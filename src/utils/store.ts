@@ -1,5 +1,4 @@
 import { dishT } from './types';
-// import mockdata from "../mock-data.json";
 
 export const writeToLS = function (data: dishT[]) {
     const jdata = JSON.stringify(data);

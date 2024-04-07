@@ -28,7 +28,7 @@ export const getDishDescription = async function (imageUrl: string) {
         ],
         max_tokens: 300,
     };
-    // console.log(apiKey);
+    
     try {
         const request = await axios.post(
             "https://api.openai.com/v1/chat/completions",
@@ -68,5 +68,4 @@ export const addNewDish = async function(payload: dishT) {
     await writeToLS(rdata);
 }
 
-// main();
 

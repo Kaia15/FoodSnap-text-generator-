@@ -2,8 +2,7 @@ import { useImageUrl } from '../hooks/useImageUrl';
 
 export function PhotoUpload() {
     const { file, handleFileChange, handleUpload, imageSrc, popNext} = useImageUrl();
-    // console.log(imageUrl);
-
+    
     return (
         <div className="photo-upload-container">
             <style>

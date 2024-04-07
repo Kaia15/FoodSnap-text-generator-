@@ -11,14 +11,6 @@ import Feed from "./components/feed";
 function App() {
   return (
     <div className="App">
-      {/* {collection.map((item) => (
-        <div>
-          {item?.description}
-        </div>
-      ))} */}
-      {/* <button onClick={() => generateDescription(imageUrl)}> Generate Description </button>
-      {description ? <div> {description.message.content} </div> : <div></div>} */}
-      {/* <Popup /> */}
       <Feed />
     </div>
   );

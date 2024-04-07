@@ -10,8 +10,7 @@ export const firebaseConfig = {
     storageBucket: "porfolio-2022-ac620.appspot.com",
     messagingSenderId: "511307942162",
     appId: "1:511307942162:web:716baf020246d803e30bcb",
-    measurementId: "G-RM1HTMHKZ8",
-    //storageBucket: 'gs://porfolio-2022-ac620.appspot.com/'
+    measurementId: "G-RM1HTMHKZ8"
 };
 
 // Initialize Firebase
