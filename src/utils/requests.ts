@@ -1,5 +1,3 @@
-// import OpenAI from "openai";
-// const axios = require("axios");
 import axios from "axios";
 import { readFromLS, writeToLS } from "./store";
 import { dishT } from "./types";
@@ -15,7 +13,7 @@ export const getDishDescription = async function (imageUrl: string) {
                 content: [
                     {
                         type: "text",
-                        text: "What are the average amounts of protein, carbohydrates, vegetables, and fat, and total calories present in the dish?",
+                        text: "What are the average amounts of protein, carbohydrates, vegetables, and fat, and total calories present in the dish? (maximum 150 words)",
                     },
                     {
                         type: "image_url",
@@ -59,6 +57,7 @@ export const fetchLastWeekDishes = async function() {
     return data?.filter((post:dishT) => {
         const d = post?.date;
         if (d) return new Date(d) >= p;
+        return false;
     });
 }
 

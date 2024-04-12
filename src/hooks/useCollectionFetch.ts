@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { fetchAllDishes, fetchLastWeekDishes, getDishDescription } from "../utils/requests";
+import { useEffect, useContext } from "react";
+import { fetchLastWeekDishes } from "../utils/requests";
 import { AuthContext } from "../context/context";
 
 export function useCollectionFetch() {
@@ -18,7 +18,7 @@ export function useCollectionFetch() {
 
     tdata();
 
-  }, [])
+  }, [setCollection])
 
   return {collection,setCollection};
 }

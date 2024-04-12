@@ -1,46 +1,56 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/context";
+import HouseIcon from '@mui/icons-material/House';
+import SearchIcon from '@mui/icons-material/Search';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export default function NavBar() {
-  const {openPopup, setOpenPopup} = useContext(AuthContext);
+  const {setOpenPopup} = useContext(AuthContext);
   return (
     <div className="navbar-wrapper">
       <style>
         {`
-        @import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&display=swap');
         .navbar-wrapper {
           flex: 2;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           top: 0;
           left: 0;
           bottom: 0;
-          height: 100vh; /* set the height to 100% of the viewport height */
+          height: 100vh;
           position: sticky;
           z-index: 1;
           font-weight: bold;
+          padding: 8px 12px 0px 12px;
+        }
+
+        .app {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          padding: 25px 12px 16px 12px;
+          margin: 0px 0px 19px 0px;
+          line-height: 18px;
+          font-size: 20px;
         }
 
        .Navbar-links {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
           height: 100%;
         }
 
        .Navbar-link {
-          margin: 10px 0;
+          margin: 4px 0px;
+          padding: 16px 0px;
+          text-align: left;
+          display: flex;
+          flex-direction: row;
+          gap: 12px;
         }
 
-       .Navbar-link a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+       .Navbar-link span {
           height: 100%;
           color: #333;
           text-decoration: none;
-          font-size: 14px;
-          line-height: 20px;
+          font-size: 16px;
+          line-height: 18px;
+          margin: 5px;
         }
 
        .Navbar-link a:hover {
@@ -63,15 +73,21 @@ export default function NavBar() {
         }
         `}
       </style>
+      <div className="app">
+        Foodsnap
+      </div>
       <div className="Navbar-links">
         <div className="Navbar-link">
-          <a href="/">Home</a>
+          <HouseIcon fontSize="large"/>
+          <span>Home</span>
         </div>
         <div className="Navbar-link">
-          <a href="/">Search</a>
+          <SearchIcon fontSize="large"/>
+          <span>Search</span>
         </div>
-        <div className="Navbar-link">
-          <a onClick={() => {setOpenPopup(true)}}>Add</a>
+        <div className="Navbar-link" onClick={() => {setOpenPopup(true)}}>
+          <AddCircleOutlineIcon fontSize="large"/>
+          <span> Create </span>
         </div>
       </div>
     </div>

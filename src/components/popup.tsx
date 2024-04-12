@@ -1,4 +1,3 @@
-// Popup.jsx
 import { useContext } from 'react';
 import { PhotoUpload } from './photo';
 import { useDish } from '../hooks/useDish';
@@ -48,8 +47,9 @@ const Popup = () => {
                     position: absolute;
                     top: 10px;
                     right: 10px;
-                    font-size: 20px;
+                    font-size: 32px;
                     cursor: pointer;
+                    color: white;
                 }
 
                 .modal-body {
@@ -146,7 +146,7 @@ const Popup = () => {
                                 <input type="text" id="name" onChange={handleNameChange} />
                                 <label htmlFor="date"> Date </label>
                                 <input type="date" id="date" onChange={handleDateChange} />
-                                <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Generate dish description by our AI assistant </button>
+                                <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Estimate your calories & nutrients intake by our AI assistant </button>
                                 {startGenerate && <p className='description'>{description ? description.message.content : "Loading..."}</p>}
                                 <button type='submit'>Post</button>
                             </form>

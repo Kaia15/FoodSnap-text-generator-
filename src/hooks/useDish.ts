@@ -8,9 +8,9 @@ import { ChangeEvent } from "react";
 
 export const useDish = function() {
     const {dish,setDish} = useContext(AuthContext);
-    const {description, setDescription} = useDescription();
-    const {imageUrl, setImageUrl} = useImageUrl();
-    const {collection, setCollection} = useCollectionFetch();
+    const {description} = useDescription();
+    const {imageUrl} = useImageUrl();
+    const {setCollection} = useCollectionFetch();
 
     useEffect(() => {
         setDish((prevDish) => ({
@@ -19,7 +19,7 @@ export const useDish = function() {
             description: description ? description.message.content : "",
         }));
         console.log(imageUrl);
-    }, [imageUrl, description]);
+    }, [imageUrl, description, setDish]);
 
     const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;

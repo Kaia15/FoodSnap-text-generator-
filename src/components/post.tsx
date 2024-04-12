@@ -1,10 +1,14 @@
 import { dishT } from "../utils/types";
 
 export default function Post(props: dishT) {
-    return (
-        <div className="Post">
-            <style>
-                {`
+  let d = new Date();
+  if (props.date) d = new Date(props.date);
+  let dstring = `${d.getDay()} / ${d.getMonth()} / ${d.getFullYear()}`
+
+  return (
+    <div className="Post">
+      <style>
+        {`
                 /* src/components/Post/Post.css */
                 .Post {
                   width: 100%;
@@ -63,19 +67,19 @@ export default function Post(props: dishT) {
                   color: #666;
                 }
                 `}
-            </style>
-          <div className="Post-header">
-            <div className="Post-user-info">
-              <div className="Post-name">{props.name}</div>
-              <div className="Post-timestamp">9 minutes ago</div>
-            </div>
-          </div>
-          <img src={props.imageUrl ? props.imageUrl : ""} alt="Post" className="Post-image" />
-          <div className="Post-footer">
-            <div className="Post-caption">
-              <div className="Post-text">{props.description}</div>
-            </div>
-          </div>
+      </style>
+      <div className="Post-header">
+        <div className="Post-user-info">
+          <div className="Post-name">{props.name}</div>
+          <div className="Post-timestamp"> {dstring} </div>
         </div>
-      );
+      </div>
+      <img src={props.imageUrl ? props.imageUrl : ""} alt="Post" className="Post-image" />
+      <div className="Post-footer">
+        <div className="Post-caption">
+          <div className="Post-text">{props.description}</div>
+        </div>
+      </div>
+    </div>
+  );
 }

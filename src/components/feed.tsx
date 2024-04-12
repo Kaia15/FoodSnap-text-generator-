@@ -7,8 +7,8 @@ import { useCollectionFetch } from "../hooks/useCollectionFetch";
 import Popup from "./popup";
 
 export default function Feed() {
-    const {collection, setCollection} = useCollectionFetch();
-    const {openPopup, setOpenPopup} = useContext(AuthContext);
+    const {collection} = useCollectionFetch();
+    const {openPopup} = useContext(AuthContext);
 
     console.log(collection);
     return (
@@ -18,7 +18,6 @@ export default function Feed() {
           .feed {
             display: flex;
             flex-direction: row;
-            height: 100%;
           }
           .posts {
             display: flex;

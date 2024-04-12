@@ -1,5 +1,4 @@
-import { descriptionT } from "./types";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { getDishDescription } from "../utils/requests";
 import { AuthContext } from "../context/context";
 
@@ -12,8 +11,6 @@ export const useDescription = function () {
         const data = await getDishDescription(imageUrl);
         setDescription(data);
     }
-
-    console.log(description);
 
     return { description, setDescription, generateDescription, startGenerate }
 }
