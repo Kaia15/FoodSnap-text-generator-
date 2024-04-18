@@ -17,26 +17,35 @@ export default function Feed() {
         {`
           .feed {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
           }
           .posts {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            flex: 8;
           }
-          
+          .posts-blank {
+            flex: 1;
+          }
+          .posts-display {
+            flex: 2;
+          }
           `}
         </style>
         <NavBar />
         <div className="posts">
-        {collection?.map((dish) => {
-          return (
-            <Post {...dish as dishT} />
-          )
-        })}
+          <div className="posts-blank"></div>
+          <div className="posts-display">
+          {collection?.map((dish) => {
+            return (
+              <Post {...dish as dishT} />
+            )
+          })}
+          </div>
+          <div className="posts-blank"></div>
         </div>
+          
         {openPopup && <Popup />}
       </div>
     )
