@@ -33,10 +33,8 @@ const Popup = () => {
 
                 .modal {
                     background-color: white;
-                    border-radius: 8px;
                     max-width: 50%;
                     max-height: 75%;
-                    overflow: auto;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -59,14 +57,14 @@ const Popup = () => {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 10px;
+                    gap: 4px;
                 }
 
-                .post-image {
-                    width: 100%;
-                    max-width: 500px;
-                    height: 500px;
-                    border-radius: 8px;
+                .modal-wrapper {
+                    background-color: white;
+                    display: flex;
+                    gap: 4px;
+                    flex-direction: column;
                 }
 
                 .share-button {
@@ -79,13 +77,6 @@ const Popup = () => {
                     font-size: 16px;
                 }
 
-                .description-container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 10px;
-                }
-
                 form {
                     display: flex;
                     flex-direction: column;
@@ -96,63 +87,85 @@ const Popup = () => {
 
                 label {
                     font-weight: bold;
+                    text-align: left;
+                    margin-left: 4px;
                 }
 
                 input[type="text"], input[type="date"] {
                     padding: 5px;
                     border-radius: 5px;
                     border: 1px solid #ccc;
-                    width: 100%;
-                    maxWidth: 500px;
+                    width: 75%;
                 }
 
                 button[type="submit"] {
-                    background-color: #0095f6;
+                    background-color: black;
                     color: white;
-                    padding: 10px 20px;
+                    padding: 4px 16px;
                     border: none;
-                    border-radius: 5px;
+                    border-radius: 8px;
                     cursor: pointer;
-                    font-size: 16px;
+                    font-size: 14px;
+                    font-weight: bold;
                 }
 
                 button[type="button"] {
-                    background-color: #0095f6;
+                    background-color: #B2B2B2;
                     color: white;
-                    padding: 10px 20px;
+                    padding: 4px 16px;
                     border: none;
-                    border-radius: 5px;
+                    border-radius: 8px;
                     cursor: pointer;
-                    font-size: 16px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin: 4px;
+                    max-width: 50%;
                 }
 
                 .description {
-                    overflow: scroll;
+                    overflow-y: scroll;
                     max-height: 100px;
-                    max-width: 
+                    max-width: 75%;
+                    float: center;
+                }
+
+                .input-area {
+                    padding: 4px;
+                }
+
+                .description-wrapper, .button-group {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
             `}
             </style>
             <span className="close-btn" onClick={() => setOpenPopup(false)}>&times;</span>
             <div className="modal">
-                <div className="modal-body" style={{flexDirection: popNext ? "row": "column"}}>
-                    <PhotoUpload />
-                    <div style={{flex: '1'}}>
-                    {popNext && <button onClick={() => setPopNext(false)} type='button'> Back </button>}
+                <div className="modal-body">
                     {popNext && (
-                        <div className="description-container">
-                            <form onSubmit={submit}>
+                        <form className='modal-wrapper' onSubmit={submit}>
+                            <div>
+                            <button onClick={() => setPopNext(false)} type='button'> back </button>
+                            <button type='submit'>Post</button>
+                            </div>
+                            <div>
                                 <label htmlFor="name"> Name </label>
-                                <input type="text" id="name" onChange={handleNameChange} />
+                                <span> <input type="text" id="name" onChange={handleNameChange} /> </span>
+                            </div>
+                            <div>
                                 <label htmlFor="date"> Date </label>
                                 <input type="date" id="date" onChange={handleDateChange} />
-                                <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Estimate your calories & nutrients intake by our AI assistant </button>
-                                {startGenerate && <p className='description'>{description ? description.message.content : "Loading..."}</p>}
-                                <button type='submit'>Post</button>
-                            </form>
-                        </div>
+                            </div>
+                            <div className='button-group'>
+                            <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Estimate calories & nutrients by our bot </button>
+                            </div>
+                            <div className='description-wrapper'>
+                            {startGenerate && <p className='description'>{description ? description.message.content : "Loading..."}</p>}
+                            </div>
+                        </form>
                     )}
-                    </div>
+                    <PhotoUpload />
                 </div>
 
             </div>

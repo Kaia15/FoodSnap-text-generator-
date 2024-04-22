@@ -31,17 +31,21 @@ export default function Feed() {
           .posts-display {
             flex: 2;
           }
+          .no-post-screen {
+            text-align: center;
+          }
           `}
         </style>
         <NavBar />
         <div className="posts">
           <div className="posts-blank"></div>
           <div className="posts-display">
-          {collection?.map((dish) => {
-            return (
-              <Post {...dish as dishT} />
-            )
-          })}
+            <p className="no-post-screen">{collection.length <= 0 && "No post yet..."} </p>
+            {collection?.map((dish) => {
+              return (
+                <Post {...dish as dishT} />
+              )
+            })}
           </div>
           <div className="posts-blank"></div>
         </div>

@@ -1,8 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/context";
-// import HouseIcon from '@mui/icons-material/House';
-// import SearchIcon from '@mui/icons-material/Search';
-// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import logo from "../images/Threads.png";
 import SearchIcon from "../images/search.png";
 import CreateIcon from "../images/create.png";
@@ -15,7 +12,8 @@ export default function NavBar() {
       <style>
         {`
         .navbar-wrapper {
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          background-color: rgba(255, 255, 255, 0.85);
           top: 0;
           left: 0;
           bottom: 0;
@@ -36,33 +34,22 @@ export default function NavBar() {
           flex: 1;
         }
 
+        .Navbar-links-wrapper {
+          padding: 0px 70px;
+          flex: 2;
+        }
+
        .Navbar-links {
           height: 100%;
           display: flex;
           flex-direction: row;
-          flex: 2;
         }
 
        .Navbar-link {
-          margin: 4px 0px;
-          padding: 16px 0px;
-          text-align: left;
           display: flex;
-          flex-direction: row;
-          gap: 12px;
+          align-items: center;
+          justify-content: center;
           flex: 1;
-        }
-
-       .Navbar-link img {
-          float: center;
-        }
-
-       .Navbar-link a:hover {
-          text-decoration: underline;
-        }
-
-       .Navbar-link.active a {
-          font-weight: bold;
         }
 
        .Navbar-profile-picture {
@@ -84,19 +71,22 @@ export default function NavBar() {
       <div className="app">
         <img src = {logo} alt = "" width={"32px"} height={"32px"}/>
       </div>
-      <div className="Navbar-links">
-        <div className="Navbar-link">
-          <img src={SearchIcon} alt = "" width={"32px"} height={"32px"}></img>
-          {/* <span>Home</span> */}
+      <div className="Navbar-links-wrapper">
+        <div className="Navbar-links">
+          <div className="Navbar-link">
+            <img src={SearchIcon} alt = "" width={"26px"} height={"26px"}></img>
+            {/* <span>Home</span> */}
+          </div>
+          <div className="Navbar-link" onClick={() => setOpenPopup(true)}>
+            <img src={CreateIcon} alt = "" width={"32px"} height={"32px"}></img>
+            {/* <span>Search</span> */}
+          </div>
+          <div className="Navbar-link">
+            <img src={CommentIcon} alt = "" width={"24px"} height={"24px"}></img>
+              {/* <span> Create </span> */}
+          </div>
         </div>
-        <div className="Navbar-link">
-          <img src={CreateIcon} alt = "" width={"40px"} height={"40px"}></img>
-          {/* <span>Search</span> */}
-        </div>
-        <div className="Navbar-link" onClick={() => {setOpenPopup(true)}}>
-        <img src={CommentIcon} alt = "" width={"32px"} height={"32px"}></img>
-          {/* <span> Create </span> */}
-        </div>
+      
       </div>
       <div className="navbar-blank"></div>
     </div>
