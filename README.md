@@ -1,4 +1,4 @@
-# AI-generated food diary
+# My food diary, making your food journalling easy
 
 Customers want to take action to improve their diet. Research shows that keeping a diary of food intake for a week leads to better diets. It helps users gain awareness of what they’re putting in their body, and also allows trained nutritionists to give targeted advice.
 
