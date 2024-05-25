@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/context";
 import logo from "../images/logo.png";
 
-import { Home, Search, Favorite, Person, Timer, Menu, AddCircle } from '@mui/icons-material';
+import { Home, Search, Favorite, Person, Menu, AddCircle } from '@mui/icons-material';
 
 const NavBar = () => {
   const {setOpenPopup} = useContext(AuthContext);
