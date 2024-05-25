@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { fetchAllDishes, fetchLastWeekDishes, fetchRandomDishes } from "../utils/requests";
+import { fetchAllDishes, fetchRandomDishes } from "../utils/requests";
 import { AuthContext } from "../context/context";
 
 export function useCollectionFetch() {

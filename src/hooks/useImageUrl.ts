@@ -1,6 +1,6 @@
 import { ref, uploadBytes, getDownloadURL, StorageReference } from 'firebase/storage';
 import { storage } from '../utils/firebase';
-import { useState, ChangeEvent, useContext, useEffect } from 'react';
+import { ChangeEvent, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/context';
 
 export function useImageUrl() {
