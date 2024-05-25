@@ -2,7 +2,7 @@ import axios from "axios";
 import { readFromLS, writeToLS } from "./store";
 import { dishT } from "./types";
 
-const apiKey = "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";
+const apiKey = "df8877a9-c3be-4410-a72c-37a57de7154e";
 
 export const getDishDescription = async function (imageUrl: string) {
     let payload = {
@@ -45,6 +45,27 @@ export const getDishDescription = async function (imageUrl: string) {
     }
 }
 
+export const fecthRandomDish = async function () {
+    try {
+        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/random.php");
+        return response ? response.data["meals"][0] : {};
+    } catch (err) {
+        console.log(err);
+    }
+    
+}
+
+export const fetchRandomDishes = async function () {
+    const requestCalls = 10;
+    const data = [];
+    for (let i = 0; i < requestCalls; i += 1) {
+        const dish = await fecthRandomDish();
+        const convertedD = await convert2DishT(dish);
+        data.push(convertedD);
+    }
+    return data;
+}
+
 export const fetchAllDishes = async function () {
     const data = await readFromLS();
     return data;
@@ -67,4 +88,16 @@ export const addNewDish = async function(payload: dishT) {
     await writeToLS(rdata);
 }
 
-
+export const convert2DishT = async function (d: any) {
+    const dish:any = {};
+    if (d !== null ) {
+        for (const [key, value] of Object.entries(d)) {
+            if (key === "strMeal") dish["name"] = value;
+            if (key === "strMealThumb") dish["imageUrl"] = value;
+        }
+    }
+    dish["description"] = "This image shows a plate of mango sticky rice, a traditional Thai dessert. Mango sticky rice is particularly popular in Southeast Asia and is commonly served during the mango season.";
+    dish["date"] = Date.now();
+    return dish;
+    
+}

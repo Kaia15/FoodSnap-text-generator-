@@ -1,15 +1,17 @@
 import { useContext } from 'react';
 import { PhotoUpload } from './photo';
 import { useDish } from '../hooks/useDish';
-import { useDescription } from '../hooks/useDescription';
 import { useImageUrl } from '../hooks/useImageUrl';
 import { AuthContext } from '../context/context';
 
 const Popup = () => {
-    const { submit, handleDateChange, handleNameChange } = useDish();
-    const { description, generateDescription, startGenerate } = useDescription();
-    const { imageUrl, popNext, setPopNext } = useImageUrl();
+    const { submit, handleNameChange, dish } = useDish();
+    // const { description, generateDescription, startGenerate } = useDescription();
+    const { back, setBack, imageSrc, file } = useImageUrl();
     const { setOpenPopup } = useContext(AuthContext);
+
+    console.log(dish);
+    console.log(file);
 
     return (
         <div className='popup'>
@@ -30,17 +32,6 @@ const Popup = () => {
                     bottom: 0;
                     z-index: 999;
                 }
-
-                .modal {
-                    background-color: white;
-                    max-width: 50%;
-                    max-height: 75%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
                 .close-btn {
                     position: absolute;
                     top: 10px;
@@ -49,128 +40,187 @@ const Popup = () => {
                     cursor: pointer;
                     color: white;
                 }
-
-                .modal-body {
-                    text-align: center;
-                    width: 100%;
-                    height: 100%;
+                .create-post-container {
                     display: flex;
                     flex-direction: column;
+                    height: 50%;
+                    background-color: #fff;
+                    border-radius: 10px;
+                  }
+                  
+                  .header {
+                    display: flex;
+                    justify-content: space-between;
                     align-items: center;
-                    gap: 4px;
-                }
-
-                .modal-wrapper {
-                    background-color: white;
-                    display: flex;
-                    gap: 4px;
-                    flex-direction: column;
-                }
-
-                .share-button {
-                    background-color: #0095f6;
-                    color: white;
                     padding: 10px 20px;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
+                    border-bottom: 1px solid #dbdbdb;
+                  }
+                  
+                  .header h1 {
                     font-size: 16px;
-                }
-
-                form {
+                    font-weight: 500;
+                  }
+                  
+                  .back-button, .share-button {
+                    background: none;
+                    border: none;
+                    font-size: 16px;
+                    cursor: pointer;
+                  }
+                  
+                  .content {
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 10px;
-                }
-
-                label {
-                    font-weight: bold;
-                    text-align: left;
-                    margin-left: 4px;
-                }
-
-                input[type="text"], input[type="date"] {
-                    padding: 5px;
-                    border-radius: 5px;
-                    border: 1px solid #ccc;
-                    width: 75%;
-                }
-
-                button[type="submit"] {
-                    background-color: black;
-                    color: white;
-                    padding: 4px 16px;
-                    border: none;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    font-weight: bold;
-                }
-
-                button[type="button"] {
-                    background-color: #B2B2B2;
-                    color: white;
-                    padding: 4px 16px;
-                    border: none;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    font-weight: bold;
-                    margin: 4px;
-                    max-width: 50%;
-                }
-
-                .description {
-                    overflow-y: scroll;
-                    max-height: 100px;
-                    max-width: 75%;
-                    float: center;
-                }
-
-                .input-area {
-                    padding: 4px;
-                }
-
-                .description-wrapper, .button-group {
+                    height: calc(100% - 50px);
+                  }
+                  
+                  .image-section {
+                    flex: 1;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                }
-            `}
-            </style>
-            <span className="close-btn" onClick={() => setOpenPopup(false)}>&times;</span>
-            <div className="modal">
-                <div className="modal-body">
-                    {popNext && (
-                        <form className='modal-wrapper' onSubmit={submit}>
-                            <div>
-                            <button onClick={() => setPopNext(false)} type='button'> back </button>
-                            <button type='submit'>Post</button>
-                            </div>
-                            <div>
-                                <label htmlFor="name"> Name </label>
-                                <span> <input type="text" id="name" onChange={handleNameChange} /> </span>
-                            </div>
-                            <div>
-                                <label htmlFor="date"> Date </label>
-                                <input type="date" id="date" onChange={handleDateChange} />
-                            </div>
-                            <div className='button-group'>
-                            <button type="button" onClick={() => imageUrl && generateDescription(imageUrl)} disabled={!imageUrl}> Estimate calories & nutrients by our bot </button>
-                            </div>
-                            <div className='description-wrapper'>
-                            {startGenerate && <p className='description'>{description ? description.message.content : "Loading..."}</p>}
-                            </div>
-                        </form>
-                    )}
-                    <PhotoUpload />
-                </div>
-
+                    position: relative;
+                  }
+                  
+                  .image-section img {
+                    max-width: 100%;
+                    max-height: 100%;
+                  }
+                  
+                  .tag-photo {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    background-color: rgba(0, 0, 0, 0.7);
+                    color: #fff;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                  }
+                  
+                  .details-section {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px;
+                    border-left: 1px solid #dbdbdb;
+                  }
+                  
+                  .user-info {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  }
+                  
+                  .user-avatar {
+                    border-radius: 50%;
+                    margin-right: 10px;
+                  }
+                  
+                  .username {
+                    font-weight: 600;
+                  }
+                  
+                  .caption-input {
+                    width: 100%;
+                    height: 100px;
+                    border: none;
+                    resize: none;
+                    outline: none;
+                    font-size: 16px;
+                  }
+                  
+                  .extra-info {
+                    margin-top: auto;
+                  }
+                  
+                  .char-count {
+                    text-align: right;
+                    font-size: 12px;
+                    color: #999;
+                  }
+                  
+                  .location-section {
+                    margin-top: 10px;
+                  }
+                  
+                  .location-button {
+                    background: none;
+                    border: none;
+                    color: #0095f6;
+                    cursor: pointer;
+                    font-size: 14px;
+                  }
+                  
+                  .settings-section details {
+                    margin-top: 10px;
+                  }
+                  
+                  .settings-section summary {
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 600;
+                  }
+                  
+                  .settings-section p {
+                    font-size: 14px;
+                    color: #999;
+                    margin: 5px 0 0 10px;
+                  }
+                `}
+                </style>
+        <span className="close-btn" onClick={() => setOpenPopup(false)}>&times;</span>
+        {back ? 
+        <form className="create-post-container" onSubmit={submit}>
+          <div className="header">
+            <button className="back-button" onClick={() => setBack(false)}>←</button>
+            <h1>Create new post</h1>
+            <button className="share-button" type='submit'>Share</button>
+          </div>
+          <div className="content">
+            <div className="image-section">
+              <img
+                src={imageSrc ? imageSrc : ""}
+                alt="Upload Preview"
+              />
+              {/* <div className="tag-photo">Click photo to tag people</div> */}
             </div>
+            <div className="details-section">
+              {/* <div className="user-info">
+                <img
+                  src="https://via.placeholder.com/50"
+                  alt="User Avatar"
+                  className="user-avatar"
+                />
+                <span className="username">t_trannna</span>
+              </div> */}
+              <input
+                type='text'
+                className="caption-input"
+                placeholder="Write a name..."
+                id='name'
+                onChange={handleNameChange}
+              />
+              <div className="extra-info">
+                {/* <div className="char-count">{caption.length}/2,200</div> */}
+                <div className="location-section">
+                  <button className="location-button">Add location</button>
+                </div>
+                <div className="settings-section">
+                  <details>
+                    <summary>Accessibility</summary>
+                    <p>Accessibility settings go here.</p>
+                  </details>
+                  <details>
+                    <summary>Advanced settings</summary>
+                    <p>Advanced settings go here.</p>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form> : <PhotoUpload />}
         </div>
-    );
+      );
 };
 
 export default Popup;

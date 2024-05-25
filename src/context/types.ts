@@ -18,4 +18,10 @@ export interface AuthContextType {
     setPopNext: React.Dispatch<React.SetStateAction<boolean>>;
     openPopup: boolean,
     setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
+    randomDishes: any,
+    setRandomDishes: React.Dispatch<React.SetStateAction<any>>;
+    back:boolean,
+    setBack:React.Dispatch<React.SetStateAction<any>>;
+    file: File | null,
+    setFile: React.Dispatch<React.SetStateAction<File | null>>;
 }
