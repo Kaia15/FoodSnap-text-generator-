@@ -1,5 +1,7 @@
 import { dishT } from '../utils/types';
 import { useCollectionFetch } from "../hooks/useCollectionFetch";
+import { useContext } from 'react';
+import { AuthContext } from '../context/context';
 
 const Post = (props: dishT) => (
   <div className="news-article">
@@ -12,6 +14,7 @@ const Post = (props: dishT) => (
 
 const Posts = () => {
     const {collection,randomDishes} = useCollectionFetch();
+    const {startGenerate} = useContext(AuthContext);
   
     // console.log(collection);
     // console.log(randomDishes);

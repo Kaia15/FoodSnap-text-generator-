@@ -3,15 +3,16 @@ import { PhotoUpload } from './photo';
 import { useDish } from '../hooks/useDish';
 import { useImageUrl } from '../hooks/useImageUrl';
 import { AuthContext } from '../context/context';
+import { useDescription } from '../hooks/useDescription';
 
 const Popup = () => {
     const { submit, handleNameChange, dish } = useDish();
-    // const { description, generateDescription, startGenerate } = useDescription();
-    const { back, setBack, imageSrc, file } = useImageUrl();
+    const { description, generateDescription, startGenerate } = useDescription();
+    const { back, setBack, imageSrc, file, imageUrl } = useImageUrl();
     const { setOpenPopup } = useContext(AuthContext);
 
     console.log(dish);
-    console.log(file);
+    // console.log(file);
 
     return (
         <div className='popup'>
@@ -141,6 +142,8 @@ const Popup = () => {
                   
                   .location-section {
                     margin-top: 10px;
+                    display: flex;
+                    flex-direction: column;
                   }
                   
                   .location-button {
@@ -149,6 +152,8 @@ const Popup = () => {
                     color: #0095f6;
                     cursor: pointer;
                     font-size: 14px;
+                    text-align: left;
+                    margin: 6px 0px;
                   }
                   
                   .settings-section details {
@@ -174,7 +179,7 @@ const Popup = () => {
           <div className="header">
             <button className="back-button" onClick={() => setBack(false)}>←</button>
             <h1>Create new post</h1>
-            <button className="share-button" type='submit'>Share</button>
+            <button className="share-button" type='submit' disabled={startGenerate}>Share</button>
           </div>
           <div className="content">
             <div className="image-section">
@@ -204,6 +209,9 @@ const Popup = () => {
                 {/* <div className="char-count">{caption.length}/2,200</div> */}
                 <div className="location-section">
                   <button className="location-button">Add location</button>
+                  <button className="location-button" onClick={() => generateDescription()}
+                  type="button"
+                  >Add description</button>
                 </div>
                 <div className="settings-section">
                   <details>

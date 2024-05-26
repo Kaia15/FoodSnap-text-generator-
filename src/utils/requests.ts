@@ -1,8 +1,35 @@
 import axios from "axios";
 import { readFromLS, writeToLS } from "./store";
 import { dishT } from "./types";
+import {OpenAIClient, AzureKeyCredential } from "@azure/openai";
 
-const apiKey = "***";
+const ENDPOINT = "https://polite-ground-030dc3103.4.azurestaticapps.net/api/v1"
+const API_KEY = "df8877a9-c3be-4410-a72c-37a57de7154e";
+const apiKey = "***"
+
+const API_VERSION = "2024-02-01"
+const MODEL_NAME = "gpt-35-turbo-16k"
+
+const client = new OpenAIClient(ENDPOINT, new AzureKeyCredential(API_KEY));
+
+interface Message {
+    role: "user" | "system",
+    content: string
+}
+
+export const getDishCalories = async function(imageUrl: string) {
+    try {
+        const MESSAGES: Message[] = [
+            {"role": "user", "content": `Can you tell me the dish: ${imageUrl} and the average calories per serving of this dish (in maximum 50 words)`},
+        ];
+        
+        const completion = await client.getChatCompletions(MODEL_NAME,MESSAGES);
+        
+        return completion.choices[0].message;
+    } catch (err) {
+        console.error("Error:", err);
+    }
+}
 
 export const getDishDescription = async function (imageUrl: string) {
     let payload = {

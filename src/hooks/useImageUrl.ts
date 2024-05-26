@@ -47,6 +47,7 @@ export function useImageUrl() {
             }
         }
     };
+    console.log(imageUrl)
 
     return { file, imageUrl, setImageUrl, handleFileChange, handleUpload, imageSrc, popNext, setPopNext, back, setBack }
 }
