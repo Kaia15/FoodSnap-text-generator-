@@ -1,6 +1,6 @@
 import axios from "axios";
-import { readFromLS, writeToLS } from "./store";
-import { dishT } from "./types";
+import { readCollectionFromLS, readDailyIntakeFromLS, writeCollectionToLS, writeDailyIntakeToLS } from "./store";
+import { DailyIntakeT, dishT, NutrientT } from "./types";
 import {OpenAIClient, AzureKeyCredential } from "@azure/openai";
 
 const ENDPOINT = "https://polite-ground-030dc3103.4.azurestaticapps.net/api/v1"
@@ -8,7 +8,7 @@ const API_KEY = "df8877a9-c3be-4410-a72c-37a57de7154e";
 const apiKey = "***"
 
 const API_VERSION = "2024-02-01"
-const MODEL_NAME = "gpt-35-turbo-16k"
+const MODEL_NAME = "gpt-4-32k"
 
 const client = new OpenAIClient(ENDPOINT, new AzureKeyCredential(API_KEY));
 
@@ -19,8 +19,21 @@ interface Message {
 
 export const getDishCalories = async function(imageUrl: string) {
     try {
+        console.log(imageUrl);
         const MESSAGES: Message[] = [
-            {"role": "user", "content": `Can you tell me the dish: ${imageUrl} and the average calories per serving of this dish (in maximum 50 words)`},
+            {"role": "user", 
+            "content": `Include the quantity per serving (grams or ounces) of the dish ${imageUrl} and list a few ingredients as one bullet point 
+            and the average calories, carbs, proteins, fibers, 
+            and fats. Only return an object-like string: {
+                calories: number,
+                protein: number,
+                carbs: number,
+                fat: number,
+                fiber: number,
+                water: number,
+                serving_size: number
+            } with NO any additional information`
+        }
         ];
         
         const completion = await client.getChatCompletions(MODEL_NAME,MESSAGES);
@@ -94,7 +107,7 @@ export const fetchRandomDishes = async function () {
 }
 
 export const fetchAllDishes = async function () {
-    const data = await readFromLS();
+    const data = await readCollectionFromLS();
     return data;
 }
 
@@ -109,10 +122,29 @@ export const fetchLastWeekDishes = async function() {
     });
 }
 
+export const fetchAllDailyIntakes = async function () {
+    const ddata = await readDailyIntakeFromLS();
+    return ddata;
+}
+
 export const addNewDish = async function(payload: dishT) {
-    const rdata = await readFromLS();
+    const rdata = await readCollectionFromLS();
     rdata.push(payload);
-    await writeToLS(rdata);
+    await writeCollectionToLS(rdata);
+}
+
+export const addDailyIntake = async function (payload: DailyIntakeT) {
+    const ddata = await readDailyIntakeFromLS();
+    let d = false;
+    for (const intake of ddata) {
+        if (intake["date"] === payload["date"]) {
+            Sum2Objects(payload["macronutrients"],intake["macronutrients"]);
+            d = true;
+            break;
+        }
+    }
+    if (!d) ddata.push(payload);
+    await writeDailyIntakeToLS(ddata);
 }
 
 export const convert2DishT = async function (d: any) {
@@ -121,10 +153,41 @@ export const convert2DishT = async function (d: any) {
         for (const [key, value] of Object.entries(d)) {
             if (key === "strMeal") dish["name"] = value;
             if (key === "strMealThumb") dish["imageUrl"] = value;
+            if (key === "strYoutube") dish["caption"] = `View detailed recipe here: ${value};`
         }
     }
-    dish["description"] = "This image shows a plate of mango sticky rice, a traditional Thai dessert. Mango sticky rice is particularly popular in Southeast Asia and is commonly served during the mango season.";
+    // dish["description"] = "This image shows a plate of mango sticky rice, a traditional Thai dessert. Mango sticky rice is particularly popular in Southeast Asia and is commonly served during the mango season.";
     dish["date"] = Date.now();
     return dish;
     
+}
+
+export const convertDishT2DailyIntakeT = async function (d: dishT): Promise<(DailyIntakeT | any)[]> {
+    let nutrients = {};
+    let error;
+    if (d["description"]) {
+        try {
+            nutrients = JSON.parse(d["description"]);
+            if (typeof nutrients !== "object") error = "404";
+        } catch (err) {
+            console.error("Failed to parse description:", err);
+            error = err;
+            nutrients = {}; // Set default value in case of error
+        }
+    }
+    let dt = new Date();
+    const di: DailyIntakeT = {
+        date: d.date ? d.date.toDateString() : dt.toDateString(),
+        macronutrients: nutrients as NutrientT
+    };
+    return [di, error];
+}
+
+export const Sum2Objects = function(obj1: NutrientT, obj2: NutrientT):void {
+    for (const key in obj1) {
+        if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
+          const typedKey = key as keyof NutrientT;
+          obj2[typedKey] += obj1[typedKey];
+        }
+    }
 }

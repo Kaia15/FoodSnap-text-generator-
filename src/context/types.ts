@@ -1,4 +1,4 @@
-import { dishT } from "../utils/types";
+import { DailyIntakeT, dishT } from "../utils/types";
 import { descriptionT } from "../hooks/types";
 
 export interface AuthContextType {
@@ -24,4 +24,6 @@ export interface AuthContextType {
     setBack:React.Dispatch<React.SetStateAction<any>>;
     file: File | null,
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
+    dailyintake: (DailyIntakeT | null)[],
+    setDailyIntake: React.Dispatch<React.SetStateAction<(DailyIntakeT | null)[]>>;
 }

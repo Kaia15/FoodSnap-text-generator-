@@ -6,7 +6,7 @@ import { AuthContext } from '../context/context';
 import { useDescription } from '../hooks/useDescription';
 
 const Popup = () => {
-    const { submit, handleNameChange, dish } = useDish();
+    const { submit, handleNameChange, dish, handleCaptionChange } = useDish();
     const { description, generateDescription, startGenerate } = useDescription();
     const { back, setBack, imageSrc, file, imageUrl } = useImageUrl();
     const { setOpenPopup } = useContext(AuthContext);
@@ -190,20 +190,28 @@ const Popup = () => {
               {/* <div className="tag-photo">Click photo to tag people</div> */}
             </div>
             <div className="details-section">
-              {/* <div className="user-info">
+              <div className="user-info">
                 <img
                   src="https://via.placeholder.com/50"
                   alt="User Avatar"
                   className="user-avatar"
                 />
-                <span className="username">t_trannna</span>
-              </div> */}
+                <span className="username">
+                  <input
+                  type='text'
+                  className="caption-input"
+                  placeholder="Title of this meal..."
+                  id='name'
+                  onChange={handleNameChange}
+                />
+                </span>
+              </div>
               <input
                 type='text'
                 className="caption-input"
-                placeholder="Write a name..."
-                id='name'
-                onChange={handleNameChange}
+                placeholder="Write a caption..."
+                id='caption'
+                onChange={handleCaptionChange}
               />
               <div className="extra-info">
                 {/* <div className="char-count">{caption.length}/2,200</div> */}
@@ -211,7 +219,7 @@ const Popup = () => {
                   <button className="location-button">Add location</button>
                   <button className="location-button" onClick={() => generateDescription()}
                   type="button"
-                  >Add description</button>
+                  >Add kcal & nutrients count</button>
                 </div>
                 <div className="settings-section">
                   <details>

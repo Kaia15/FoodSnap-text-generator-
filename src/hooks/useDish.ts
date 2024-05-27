@@ -1,17 +1,18 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useDescription } from "./useDescription";
 import { useImageUrl } from "./useImageUrl";
 import { AuthContext } from "../context/context";
 import { useCollectionFetch } from "./useCollectionFetch";
-import { addNewDish } from "../utils/requests";
+import { addDailyIntake, addNewDish, convertDishT2DailyIntakeT } from "../utils/requests";
 import { ChangeEvent } from "react";
-import { dishT } from "../utils/types";
+import { DailyIntakeT, dishT } from "../utils/types";
 
 export const useDish = function() {
     const {dish,setDish} = useContext(AuthContext);
     const {description} = useDescription();
     const {file,handleUpload,imageUrl} = useImageUrl();
     const {setCollection} = useCollectionFetch();
+    const [toast, setToast] = useState(false);
 
     useEffect(() => {
         setDish((prevDish) => ({
@@ -28,6 +29,11 @@ export const useDish = function() {
         setDish((prevDish) => ({ ...prevDish, name: value }));
     };
 
+    const handleCaptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setDish((prevDish) => ({ ...prevDish, caption: value }));
+    };
+
     const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setDish((prevDish) => ({ ...prevDish, date: new Date(value) }));
@@ -41,12 +47,29 @@ export const useDish = function() {
                 const url = await handleUpload(file);
                 // console.log(url);
                 const d:dishT = {...dish, imageUrl: url ? url: ""};
-                setCollection(prevdata => [...prevdata,d]);
-                addNewDish(d);
+                const [intake,err]= await convertDishT2DailyIntakeT(d);
+                // console.log(err);
+                if (err !== "404") {
+                    setCollection(prevdata => [...prevdata,d]);
+                    addNewDish(d);
+                    addDailyIntake(intake);
+                } else {
+                    setToast(true);
+                    setTimeout(() => setToast(false), 500)
+                }
+                
             } else {
-                const d:dishT = {...dish, imageUrl: imageUrl ? imageUrl: ""};
-                setCollection(prevdata => [...prevdata,d]);
-                addNewDish(d);
+                const url = await handleUpload(file);
+                // console.log(url);
+                const d:dishT = {...dish, imageUrl: url ? url: ""};
+                const [intake,err]= await convertDishT2DailyIntakeT(d);
+                // console.log(err);
+                if (err !== "404") {
+                    setCollection(prevdata => [...prevdata,d]);
+                    addNewDish(d);
+                    addDailyIntake(intake);
+                }
+                
             }
             // console.log(d);
             
@@ -56,5 +79,5 @@ export const useDish = function() {
         
     }
     
-    return {dish,setDish,submit,handleNameChange,handleDateChange}
+    return {dish,setDish,submit,handleNameChange,handleDateChange,handleCaptionChange, toast, setToast}
 }

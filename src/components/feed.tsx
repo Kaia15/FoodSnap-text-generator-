@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/context";
 import Popup from "./popup";
 import Posts from "./posts";
+import Profile from "./profile";
+import Toast from "./toast";
 
 export default function Feed() {
   const {openPopup} = useContext(AuthContext);
@@ -17,7 +19,8 @@ export default function Feed() {
         `}
       </style>
       <NavBar />
-      <Posts />
+      {/* <Posts /> */}
+      <Profile />
       {openPopup && <Popup />}
     </div>
   )

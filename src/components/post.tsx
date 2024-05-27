@@ -1,74 +1,47 @@
 import { useState } from "react";
 import { dishT } from "../utils/types";
 
-export default function Post(props: dishT) {
-  const [openDescription, setOpenDescription] = useState<boolean>(false);
-  let d = new Date();
-  if (props.date) d = new Date(props.date);
-  let dstring = `${d.getDay()} / ${d.getMonth()} / ${d.getFullYear()}`
+const Post = function (props: dishT) {
+  // console.log(typeof props.date)
+  let date;
+  let random = false;
+  if (typeof props.date === "number") {
+    let d = new Date(props.date);
+    date = d.toDateString();
+    random = true;
+  } else date = props.date ? new Date(props.date).toDateString(): "";
+
+  const [seeMore, setSeeMore] = useState(false);
+
 
   return (
-    <div className="post">
+    <div className="news-article">
       <style>
         {`
-        .post {
+        .news-article {
+          margin-bottom: 20px;
+          padding-bottom: 20px;
           border-bottom: 1px solid #ccc;
-          // border-radius: 5px;
-          padding: 1rem;
-          margin-bottom: 1rem;
+          text-align: left;
+        }
+        
+        .news-title {
+          font-weight: bold;
+          font-size: 18px;
+          margin-top: 0;
+        }
+        
+        .news-source {
+          font-size: 16px; /* Adjust the size as needed */
+          color: #B0B0B0; /* Light grey color */
+        }
+        
+        .news-content {
+          font-size: 16px;
+          line-height: 1.5;
         }
 
-        .post-header {
-          display: flex;
-          align-items: center;
-          margin-bottom: 1rem;
-        }
-
-        .post-header h3, .post-header p {
-          margin: 0px 3px;
-        }
-
-        .post-header img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin-right: 1rem;
-        }
-
-        .post-info {
-          float: right;
-        }
-
-        .post-content {
-          margin-bottom: 1rem;
-        }
-
-        .post-image {
-          max-width: 300px;
-          max-height: 300px;
-          border-radius: 5px;
-        }
-
-        .post-footer {
-          display: flex;
-          // justify-content: space-between;
-        }
-
-        .post-footer button {
-          background-color: #fff;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          padding: 0.5rem 1rem;
-          cursor: pointer;
-          margin: 0px 4px;
-        }
-
-        .post-footer button:hover {
-          background-color: #f2f2f2;
-        }
-
-        .see-more-button, .see-less-button {
+        .see-more-button {
           color: #333;
           font-size: 14px;
           font-weight: bold;
@@ -79,44 +52,38 @@ export default function Post(props: dishT) {
           transition: background-color 0.3s ease;
         }
         
-        .see-more-button:hover {
-          background-color: #f5f5f5;
+        .nutrient-section {
+          font-weight: bold;
         }
-
+        
+        .news-image {
+          width: 100%;
+          max-width: 300px;
+          margin: 20px auto;
+          display: block;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         `}
       </style>
-      <div className="post-header">
-        {/* <img src={props.imageUrl ? props.imageUrl : ""} alt="" /> */}
-        <h3>{props.name}</h3>
-        <p>{dstring}</p>
-      </div>
-      <div className="post-content">
-        <p>{props.description ? props.description.substring(0,200) : ""}
-        {!openDescription ? (
-          <span className="see-more-button" onClick={() => setOpenDescription(true)}>
-            ...see more
-          </span>
-        ) : (
-          <span>
-          {props.description ? (
-            <span>
-              {props.description.substring(201) + " "} <span className="see-less-button" onClick={() => setOpenDescription(false)}> see less</span>
-            </span>
-          ) : (
-            <span></span>
-          )}
-          </span>
-        )}
-
-
+      <h3 className="news-title">{props.name}</h3>
+      <p className="news-source">{date}</p>
+      <div className="news-content">{props.caption}</div>
+      <img src={props.imageUrl ? props.imageUrl : ""} alt="" className="news-image"/>
+      {/* <div className="news-content">
+        <p>{!random && <span className='nutrient-section'> Nutrients: </span>}
+        {props.description 
+              ? (seeMore ? props.description.substring(0, 200) : props.description) 
+              : ""
+        }
+        {!random && (<span className="see-more-button" onClick={() => setSeeMore(!seeMore)}>
+            {seeMore ? "see more..." : "see less..."}
+          </span>)}
         </p>
-        <img src={props.imageUrl ? props.imageUrl : ""} alt="" className="post-image"/>
-      </div>
-      <div className="post-footer">
-        <button>Like</button>
-        <button>Comment</button>
-        <button>Share</button>
-      </div>
+      </div> */}
     </div>
   );
+  
 }
+
+export default Post;
