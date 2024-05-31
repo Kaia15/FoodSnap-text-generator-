@@ -1,10 +1,15 @@
 import MetricTab from "./metrics";
-import Tab from "./tab";
+import PostTab from "./tab";
 import logo from "../images/logo.png";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/context";
 
 export default function Profile () {
-    return (
-        <div className="profile-container">
+  const [tab, setTab] = useState<number>(0);
+  const {theme} = useContext(AuthContext)
+  
+  return (
+        <div className={`profile-container ${theme}`}>
         <div className="profile-wrapper">
             <style>
                 {`
@@ -14,6 +19,14 @@ export default function Profile () {
                     justify-content: center;
                     align-items: center;
                   }
+
+                .profile-container.light {
+                  color: black;
+                }
+
+                .profile-container.dark {
+                  color: white;
+                }
                 
                 .profile-wrapper {
                     border-radius: 10px;
@@ -129,12 +142,12 @@ export default function Profile () {
             {/* <img src={logo} alt="" className="profile-image" /> */}
           </div>
           <nav className="profile-nav">
-            <button className="nav-btn">Posts</button>
-            <button className="nav-btn">Metrics</button>
+            <button className="nav-btn" onClick={() => setTab(0)}>Posts</button>
+            <button className="nav-btn" onClick={() => setTab(1)}>Metrics</button>
             <button className="nav-btn">Saved</button>
           </nav>
-          <MetricTab />
-          {/* <Tab /> */}
+          {tab === 0 && <PostTab />}
+          {tab === 1 && <MetricTab />}
         </div>
         </div>
       );

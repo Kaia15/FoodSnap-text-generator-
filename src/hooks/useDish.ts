@@ -47,28 +47,19 @@ export const useDish = function() {
                 const url = await handleUpload(file);
                 // console.log(url);
                 const d:dishT = {...dish, imageUrl: url ? url: ""};
-                const [intake,err]= await convertDishT2DailyIntakeT(d);
-                // console.log(err);
-                if (err !== "404") {
-                    setCollection(prevdata => [...prevdata,d]);
-                    addNewDish(d);
-                    addDailyIntake(intake);
-                } else {
-                    setToast(true);
-                    setTimeout(() => setToast(false), 500)
-                }
-                
+                const intake:DailyIntakeT = await convertDishT2DailyIntakeT(d);
+                console.log(intake)
+                setCollection(prevdata => [...prevdata,d]);
+                addNewDish(d);
+                addDailyIntake(intake);
             } else {
                 const url = await handleUpload(file);
                 // console.log(url);
                 const d:dishT = {...dish, imageUrl: url ? url: ""};
-                const [intake,err]= await convertDishT2DailyIntakeT(d);
-                // console.log(err);
-                if (err !== "404") {
-                    setCollection(prevdata => [...prevdata,d]);
-                    addNewDish(d);
-                    addDailyIntake(intake);
-                }
+                const intake:DailyIntakeT= await convertDishT2DailyIntakeT(d);
+                setCollection(prevdata => [...prevdata,d]);
+                addNewDish(d);
+                addDailyIntake(intake);
                 
             }
             // console.log(d);

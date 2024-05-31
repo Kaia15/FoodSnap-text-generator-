@@ -3,7 +3,7 @@ import { useCollectionFetch } from "../hooks/useCollectionFetch";
 import Post from "./post";
 import { dishT } from "../utils/types";
 
-export default function Tab() {
+export default function PostTab() {
     const {collection} = useCollectionFetch();
     return (
         <div>

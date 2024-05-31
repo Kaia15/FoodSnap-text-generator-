@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { dishT } from "../utils/types";
+import { AuthContext } from "../context/context";
 
 const Post = function (props: dishT) {
   // console.log(typeof props.date)
@@ -12,17 +13,26 @@ const Post = function (props: dishT) {
   } else date = props.date ? new Date(props.date).toDateString(): "";
 
   const [seeMore, setSeeMore] = useState(false);
+  const {theme} = useContext(AuthContext);
 
 
   return (
-    <div className="news-article">
+    <div className={`news-article ${theme}`}>
       <style>
         {`
         .news-article {
           margin-bottom: 20px;
           padding-bottom: 20px;
-          border-bottom: 1px solid #ccc;
+          border-bottom: 0.5px solid #ccc;
           text-align: left;
+        }
+
+        .news-article.light {
+          color: black;
+        }
+
+        .news-article.dark {
+          color: white;
         }
         
         .news-title {
@@ -39,6 +49,14 @@ const Post = function (props: dishT) {
         .news-content {
           font-size: 16px;
           line-height: 1.5;
+        }
+
+        .news-content.light {
+          color: black;
+        }
+
+        .news-content-dark {
+          color: white;
         }
 
         .see-more-button {

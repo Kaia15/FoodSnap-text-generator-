@@ -162,25 +162,14 @@ export const convert2DishT = async function (d: any) {
     
 }
 
-export const convertDishT2DailyIntakeT = async function (d: dishT): Promise<(DailyIntakeT | any)[]> {
-    let nutrients = {};
-    let error;
-    if (d["description"]) {
-        try {
-            nutrients = JSON.parse(d["description"]);
-            if (typeof nutrients !== "object") error = "404";
-        } catch (err) {
-            console.error("Failed to parse description:", err);
-            error = err;
-            nutrients = {}; // Set default value in case of error
-        }
-    }
+export const convertDishT2DailyIntakeT = async function (d: dishT): Promise<DailyIntakeT> {
+    let nutrients = d["description"] ? JSON.parse(d["description"]) : {};
     let dt = new Date();
     const di: DailyIntakeT = {
         date: d.date ? d.date.toDateString() : dt.toDateString(),
         macronutrients: nutrients as NutrientT
     };
-    return [di, error];
+    return di;
 }
 
 export const Sum2Objects = function(obj1: NutrientT, obj2: NutrientT):void {

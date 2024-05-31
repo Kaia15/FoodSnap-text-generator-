@@ -27,7 +27,11 @@ const AuthContext = createContext<AuthContextType>({
     file: null,
     setFile: () => {},
     dailyintake: [],
-    setDailyIntake: () => {}
+    setDailyIntake: () => {},
+    theme: "light",
+    setTheme: () => {},
+    openAppearance: false,
+    setOpenAppearance: () => {}
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -43,11 +47,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [back,setBack] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
     const [dailyintake, setDailyIntake] = useState<(DailyIntakeT | null)[]>([]);
+    const [theme, setTheme] = useState<string>("light");
+    const [openAppearance, setOpenAppearance] = useState<boolean>(false);
 
     return (
-        <AuthContext.Provider value={{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription, 
+        <AuthContext.Provider value=
+        {{ dish, setDish, imageUrl, setImageUrl, collection, setCollection, description, setDescription, 
         startGenerate, setStartGenerate, imageSrc, setImageSrc, popNext, setPopNext, openPopup, 
-        setOpenPopup, randomDishes, setRandomDishes, back, setBack, file, setFile, dailyintake, setDailyIntake }}>
+        setOpenPopup, randomDishes, setRandomDishes, back, setBack, file, setFile, dailyintake, setDailyIntake,
+        theme, setTheme,
+        openAppearance, setOpenAppearance }}>
             {children}
         </AuthContext.Provider>
     );

@@ -3,9 +3,10 @@ import { AuthContext } from "../context/context";
 import logo from "../images/logo.png";
 
 import { Home, Search, Favorite, Person, Menu, AddCircle } from '@mui/icons-material';
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const {setOpenPopup} = useContext(AuthContext);
+  const {setOpenPopup,setOpenAppearance,openAppearance,theme} = useContext(AuthContext);
   return (
     <div className="navbar">
       <style>
@@ -18,7 +19,7 @@ const NavBar = () => {
           top: 0;
           left: 0;
           bottom: 0;
-          height: 100vh;
+          height: 50vh;
           position: sticky;
           z-index: 1;
           // padding-top: 20px;
@@ -27,7 +28,6 @@ const NavBar = () => {
         
         .icon {
           margin: 20px 0;
-          color: gray;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -35,6 +35,19 @@ const NavBar = () => {
           height: 40px;
           cursor: pointer;
           border-radius: 10px;
+        }
+
+        .icon.light {
+          color: gray;
+        }
+
+        .icon.dark {
+          color: white;
+        }
+
+        .icon-link {
+          text-decoration: none;
+          color: inherit;
         }
         
         .icon:hover {
@@ -65,22 +78,26 @@ const NavBar = () => {
         `}
       </style>
       <img src={logo} alt="" className="icon"/>
-      <div className="icon">
-        <Home />
+      <div className={`icon ${theme}`}>
+        <Link to="/" className="icon-link">
+          <Home />
+        </Link>
       </div>
-      <div className="icon">
+      <div className={`icon ${theme}`}>
         <Search />
       </div>
-      <div className="icon">
+      <div className={`icon ${theme}`}>
         <Favorite />
       </div>
-      <div className="icon" onClick={() => setOpenPopup(true)}>
+      <div className={`icon ${theme}`} onClick={() => setOpenPopup(true)}>
         <AddCircle />
       </div>
-      <div className="icon">
+      <div className={`icon ${theme}`}>
+        <Link to="/profile" className="icon-link">
         <Person />
+        </Link>
       </div>
-      <div className="icon">
+      <div className={`icon ${theme}`} onClick={() => setOpenAppearance(!openAppearance)}>
         <Menu />
       </div>
     </div>

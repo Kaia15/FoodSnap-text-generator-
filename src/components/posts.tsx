@@ -7,7 +7,7 @@ import Post from './post';
 
 const Posts = () => {
     const {collection,randomDishes} = useCollectionFetch();
-    const {startGenerate} = useContext(AuthContext);
+    const {startGenerate,theme} = useContext(AuthContext);
   
     // console.log(collection);
     // console.log(randomDishes);
@@ -38,6 +38,15 @@ const Posts = () => {
               color: #333;
               margin-bottom: 10px;
             }
+
+            .a-title.light {
+              color: black;
+            }
+
+            .a-title.dark {
+              color: white;
+            }
+
             .app-container {
               max-width: 800px;
               margin: 20px;
@@ -50,7 +59,7 @@ const Posts = () => {
         </style>
         <div className='news'>
           <div className='a'>
-            <p className='a-title'> Recipes for you </p>
+            <p className={`a-title ${theme}`}> Recipes for you </p>
             <div className='app-container'>
               {randomDishes?.map((dish:dishT) => {
                 return (
@@ -62,7 +71,7 @@ const Posts = () => {
 
           {collection.length > 0 && 
           <div className='a'>
-            <p className='a-title'> Your last meals </p>
+            <p className={`a-title ${theme}`}> Your last meals </p>
             <div className='app-container'>
               {collection?.map((dish) => {
                 return (

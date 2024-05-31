@@ -26,4 +26,8 @@ export interface AuthContextType {
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
     dailyintake: (DailyIntakeT | null)[],
     setDailyIntake: React.Dispatch<React.SetStateAction<(DailyIntakeT | null)[]>>;
+    theme: string,
+    setTheme: React.Dispatch<React.SetStateAction<string>>;
+    openAppearance: boolean,
+    setOpenAppearance: React.Dispatch<React.SetStateAction<boolean>>;
 }
