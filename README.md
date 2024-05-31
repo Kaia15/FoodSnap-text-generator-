@@ -17,6 +17,10 @@ Images:
 
 ![436317198_420405174287765_3327262683825892868_n](https://github.com/Kaia15/my-food-diary/assets/86872685/39d4528f-d650-4b53-9fb6-1c37b4250a3c)
 
+![my-food-diary-dark-theme](https://github.com/Kaia15/my-food-diary/assets/86872685/6720b035-ad6e-4af0-9a12-6db18729c79a)
+
+![toggle](https://github.com/Kaia15/my-food-diary/assets/86872685/398f2891-be49-4a29-9880-9f090a75e2f3)
+
 ## Setup
 
 
